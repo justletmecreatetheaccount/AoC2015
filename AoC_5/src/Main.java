@@ -82,6 +82,8 @@ public class Main {
             char prevChar;
             char prevPrevChar;
             String toCompare;
+            String hitRep4;
+            String compared;
             boolean rep4;
             boolean rep2;
             for (int i = 0; i < input.length() / stringLength; i++) {
@@ -89,6 +91,9 @@ public class Main {
                 rep2 = false;
                 prevChar = '&';
                 prevPrevChar = '&';
+                hitRep4 = "";
+                compared = "";
+
                 stringIteration:
                 for (int j = 0; j < stringLength; j++) {
                     if (prevPrevChar == treatedInput[i * 16 + j]) {
@@ -96,8 +101,10 @@ public class Main {
                     }
                     for (int k = j + 2; k < stringLength; k++) {
                         toCompare = String.valueOf(treatedInput[i * 16 + k - 1]) + treatedInput[i * 16 + k];
-                        if (toCompare.equals(String.valueOf(treatedInput[i * 16 + j])+ prevChar)){
+                        compared = prevChar + String.valueOf(treatedInput[i * 16 + j]);
+                        if (toCompare.equals(compared)){
                             rep4 = true;
+                            hitRep4 = toCompare + " " + prevChar + treatedInput[i * 16 + j];
                         }
                     }
                     prevPrevChar = prevChar;
@@ -105,6 +112,10 @@ public class Main {
                 }
                 if (rep2 && rep4) {
                     niceString++;
+                } else if (rep2) {
+                    System.out.println(input.substring(i, i+16) + " rep2");
+                } else if (rep4) {
+                    System.out.println(input.substring(i, i+16) + " rep4 " + hitRep4);
                 }
             }
             System.out.println(niceString);
